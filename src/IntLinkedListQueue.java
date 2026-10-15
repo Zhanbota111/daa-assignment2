@@ -1,42 +1,45 @@
-public class IntLinkedListQueue implements IntQueue{
+public class IntLinkedListQueue implements IntQueue {
+    private IntLinkedList list;
 
     public IntLinkedListQueue() {
-        // creates an empty queue
+        list = new IntLinkedList();
     }
 
     @Override
     public void enqueue(int value) {
-        // adds a value to queue
+        list.addLast(value);
     }
 
     @Override
     public int dequeue() {
-        // removes, and returns a value from queue
-        return 0;
+        if (isEmpty()) {
+            throw new java.util.NoSuchElementException("Queue is empty");
+        }
+        return list.removeFirst();
     }
 
     @Override
     public int peek() {
-        // returns a value from queue
-        return 0;
+        if (isEmpty()) {
+            throw new java.util.NoSuchElementException("Queue is empty");
+        }
+        return list.peekFirst();
     }
 
     @Override
     public int size() {
-        // return size of queue
-        return 0;
+        return list.size();
     }
 
     @Override
     public boolean isEmpty() {
-        // returns whether queue is empty
-        return false;
+        return list.isEmpty();
     }
 
     @Override
     public String toString() {
-        // "[]" for empty queue
-        // "[7, 8, 6]" for queue containing elements: 7, 8, 6. (head-first)
-        return super.toString();
+        // "[]" для пустой очереди
+        // "[7, 8, 6]" для очереди с элементами (сначала head)
+        return list.toString();
     }
 }

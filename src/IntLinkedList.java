@@ -1,73 +1,113 @@
 public class IntLinkedList {
-    Node head;
-    Node tail;
-    int size;
-
-    // internal class that represents a list node.
-    static class Node {
-        int value;
+    private static class Node {
+        int data;
         Node next;
         Node prev;
-        Node() {
-            value = 0;
-            next = null;
-            prev = null;
-        }
 
-        Node(int value) {
-            this.value = value;
-            next = null;
-            prev = null;
-        }
-
-        Node(int value, Node prev, Node next) {
-            this.value = value;
-            this.prev = prev;
-            this.next = next;
+        Node(int data) {
+            this.data = data;
         }
     }
 
-    public IntLinkedList(){
-        // creates an empty list
+    private Node head;
+    private Node tail;
+    private int size;
+
+    public IntLinkedList() {
+        head = null;
+        tail = null;
+        size = 0;
     }
 
-    public void add(int value){
-        // adds a value at the end
+    public void addFirst(int value) {
+        Node newNode = new Node(value);
+        if (isEmpty()) {
+            head = tail = newNode;
+        } else {
+            newNode.next = head;
+            head.prev = newNode;
+            head = newNode;
+        }
+        size++;
     }
 
-    public void add(int index, int value){
-        // adds a value at index
+    public void addLast(int value) {
+        Node newNode = new Node(value);
+        if (isEmpty()) {
+            head = tail = newNode;
+        } else {
+            tail.next = newNode;
+            newNode.prev = tail;
+            tail = newNode;
+        }
+        size++;
     }
 
-    public int get(int index){
-        // returns a value at index
-        return 0;
+    public int removeFirst() {
+        if (isEmpty()) {
+            throw new java.util.NoSuchElementException("List is empty");
+        }
+        int val = head.data;
+        head = head.next;
+        if (head != null) {
+            head.prev = null;
+        } else {
+            tail = null;
+        }
+        size--;
+        return val;
     }
 
-    public void set(int index, int value){
-        // updates a value at index
+    public int removeLast() {
+        if (isEmpty()) {
+            throw new java.util.NoSuchElementException("List is empty");
+        }
+        int val = tail.data;
+        tail = tail.prev;
+        if (tail != null) {
+            tail.next = null;
+        } else {
+            head = null;
+        }
+        size--;
+        return val;
     }
 
-    public int remove(int index){
-        // removes and returns value at index
-        return 0;
+    public int peekFirst() {
+        if (isEmpty()) {
+            throw new java.util.NoSuchElementException("List is empty");
+        }
+        return head.data;
     }
 
-    public int size(){
-        // returns size of list
-        return 0;
+    public int peekLast() {
+        if (isEmpty()) {
+            throw new java.util.NoSuchElementException("List is empty");
+        }
+        return tail.data;
     }
 
-    public boolean isEmpty(){
-        // returns whether list is empty
-        return false;
+    public int size() {
+        return size;
+    }
+
+    public boolean isEmpty() {
+        return size == 0;
     }
 
     @Override
     public String toString() {
-        // returns String representation of list
-        // "[]" for empty list
-        // "[7, 8, 6]" for non-empty list
-        return super.toString();
+        if (isEmpty()) return "[]";
+        StringBuilder sb = new StringBuilder("[");
+        Node current = head;
+        while (current != null) {
+            sb.append(current.data);
+            if (current.next != null) {
+                sb.append(", ");
+            }
+            current = current.next;
+        }
+        sb.append("]");
+        return sb.toString();
     }
 }
